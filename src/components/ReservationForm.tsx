@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { MessageCircle } from "lucide-react";
+import { useSiteData } from "@/lib/site-data";
 
 export function ReservationForm() {
+  const { data } = useSiteData();
   const [form, setForm] = useState({
     name: "",
     contact: "",
@@ -12,8 +14,8 @@ export function ReservationForm() {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const text = `Hola Los Corales, me gustaría reservar.%0A%0ANombre: ${form.name}%0AContacto: ${form.contact}%0AFecha: ${form.date}%0APersonas: ${form.people}%0ANotas: ${form.notes}`;
-    window.open(`https://wa.me/34967023362?text=${text}`, "_blank");
+    const msg = `Hola Los Corales, me gustaría reservar.\n\nNombre: ${form.name}\nContacto: ${form.contact}\nFecha: ${form.date}\nPersonas: ${form.people}\nNotas: ${form.notes}`;
+    window.open(`https://wa.me/${data.contact.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const field = "w-full rounded-md border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 transition";
